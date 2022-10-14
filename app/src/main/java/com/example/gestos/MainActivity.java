@@ -53,9 +53,15 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        Toast.makeText(this, "onScroll", Toast.LENGTH_SHORT).show();
-        Log.d(this.getClass().getName(), "onScroll");
+    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float vx, float vy) {
+        float dx = motionEvent.getX() - motionEvent1.getX();
+        float dy = motionEvent.getY() - motionEvent1.getY();
+
+        if(Math.abs(dx) > Math.abs(dy)) {
+            scrollHorizontal(dx, vx);
+        } else {
+            scrollVertical(dy, vy);
+        }
         return true;
     }
 
@@ -92,4 +98,23 @@ public class MainActivity extends AppCompatActivity implements
         Log.d(this.getClass().getName(), "onDoubleTapEvent");
         return true;
     }
+
+    private void scrollHorizontal(float diferencial, float velocidad) {
+        String data = "Scroll ";
+        data += diferencial>0? "izquierda" : "derecha";
+        data += ", velocidad " + velocidad;
+
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+        Log.d(this.getClass().getName(), data);
+    }
+
+    private void scrollVertical(float diferencial, float velocidad) {
+        String data = "Scroll ";
+        data += diferencial>0? "arriba" : "abajo";
+        data += ", velocidad " + velocidad;
+
+        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
+        Log.d(this.getClass().getName(), data);
+    }
+
 }
